@@ -9,7 +9,7 @@ namespace ProgPOEPart1
     class Ingredient
     {
         public string Name { get; set; }
-        public int Quantity { get; set; }
+        public double Quantity { get; set; }
         public string Unit { get; set; }
 
         public Ingredient(string name, int quantity, string unit)
@@ -41,6 +41,8 @@ namespace ProgPOEPart1
 
             for (int i = 0; i < numIngredients; i++)
 
+
+
             {
                 Console.WriteLine("Enter the name of the ingredient: ");
                 string name = Console.ReadLine();
@@ -71,7 +73,7 @@ namespace ProgPOEPart1
 
         }
         
-        public void DispllayRecipe()
+        public void DisplayRecipe()
         {
             Console.WriteLine("\nRecipe:");
             Console.WriteLine("Ingredients:");
@@ -90,18 +92,55 @@ namespace ProgPOEPart1
                 Console.WriteLine("Step " + countstep + ": " + steps[i]);
             }
 
-                //foreach (var item in steps)
-                //{
-                //    int countstep = 1;
-                //    Console.WriteLine("Step" + countstep + ": " + item.); 
-                //}
-
-
-                Console.WriteLine("type any value to exit");
+            Console.WriteLine("Enter the scaling factor (0.5, 2, or 3) or press E to exit ");
             string exit = Console.ReadLine();
-            if (exit!=null) 
+            if (exit == "E" || exit == "e")
             {
                 Environment.Exit(0);
+            }
+            else
+            {
+                DisplayScaleRecipe(exit);
+            }
+
+        }
+
+        
+        public void DisplayScaleRecipe(string value)
+        {
+            double num = double.Parse(value);
+            Console.WriteLine("\nRecipe:");
+            Console.WriteLine("Ingredients:");
+
+            foreach (Ingredient ingredient in ingredients)
+            {
+                Console.WriteLine(ingredient.Quantity * num + ingredient.Unit + "  " + ingredient.Name);
+
+            }
+
+            Console.WriteLine("\nSteps:");
+
+            for (int i = 0; i < numSteps; i++)
+            {
+                int countstep = i + 1;
+                Console.WriteLine("Step " + countstep + ": " + steps[i]);
+            }
+
+            Console.WriteLine("Enter R to reset quantities or C to clear data and restart  or E to exit");
+            string exit = Console.ReadLine();
+            if (exit == "E" || exit == "e")
+            {
+                Environment.Exit(0);
+            }
+            else if(exit == "R"|| exit == "r")
+            {
+                DisplayRecipe();
+            }
+            else if(exit == "C"|| exit == "c")
+            {
+                EnterIngredients();
+                EnterSteps();
+                DisplayRecipe();
             }
         }
 
@@ -115,7 +154,7 @@ namespace ProgPOEPart1
 
             recipe.EnterIngredients();
             recipe.EnterSteps();
-            recipe.DispllayRecipe();
+            recipe.DisplayRecipe();
         }
     }
 }
